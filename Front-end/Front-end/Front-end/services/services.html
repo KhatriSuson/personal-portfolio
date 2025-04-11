@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hospital Services</title>
+  <style>
+    :root {
+      --primary: #2e86de;
+      --secondary: #f1f5f9;
+      --text: #333;
+      --card-bg: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: var(--secondary);
+      color: var(--text);
+    }
+
+    nav {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav ul li {
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    nav ul li:hover {
+      opacity: 0.8;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 8px 16px var(--shadow);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .card button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }
+
+    .card button:hover {
+      background: #1b4f72;
+    }
+
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.8rem;
+      }
+    }
+  </style>
+
+  <!-- FontAwesome CDN -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">🏥 MedicoCare</div>
+    <ul>
+      <li>Home</li>
+      <li>Services</li>
+      <li>Appointments</li>
+      <li>Contact</li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h2>Our Healthcare Services</h2>
+    <div class="services-grid">
+
+      <div class="card">
+        <i class="fas fa-user-md"></i>
+        <h3>OPD</h3>
+        <p>Outpatient services for consultation, diagnosis, and treatment by experienced doctors.</p>
+        <button><a href="opd.html">Learn More</a></button>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-pregnant-woman"></i>
+        <h3>ANC</h3>
+        <p>Quality antenatal care services to support healthy pregnancy and delivery.</p>
+        <button><a href="anc.html">Learn More</a></button>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-venus-mars"></i>
+        <h3>Family Planning</h3>
+        <p>Comprehensive services and counseling to help manage reproductive health.</p>
+        <button><a href="family-planning.html">Learn More</a></button>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-syringe"></i>
+        <h3>Immunization</h3>
+        <p>Vaccination services for children and adults to protect against diseases.</p>
+        <button><a href="immunization.html">Learn More</a></button>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-file-medical"></i>
+        <h3>Health Records</h3>
+        <p>Organized and secure digital management of patient medical records.</p>
+        <button><a href="health-records.html">Learn More</a></button>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-ambulance"></i>
+        <h3>Emergency</h3>
+        <p>24/7 emergency services with immediate care and ambulance support.</p>
+        <button><a href="emergency.html">Learn More</a></button>
+      </div>
+
+    </div>
+  </div>
+  <script></script>
+
+</body>
+</html>

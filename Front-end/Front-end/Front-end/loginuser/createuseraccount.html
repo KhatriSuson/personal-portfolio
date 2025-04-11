@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hospital Client Registration</title>
+  <style>
+    :root {
+      --primary-color: #2e86de;
+      --secondary-color: #f8f9fa;
+      --danger-color: #e74c3c;
+      --success-color: #2ecc71;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(to right, #e0f7fa, #f0f4f8);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border-radius: 0.6rem;
+      border: 1px solid #ccc;
+      background-color: #fafafa;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 0.9rem;
+      font-size: 1rem;
+      background: linear-gradient(135deg, #2e86de, #1b4f72);
+      color: white;
+      border: none;
+      border-radius: 0.6rem;
+      cursor: pointer;
+      margin-top: 1.2rem;
+      transition: background 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, #1b4f72, #2e86de);
+    }
+
+    .error {
+      color: var(--danger-color);
+      font-size: 0.9rem;
+    }
+
+    .otp-box {
+      display: none;
+      margin-top: 1.5rem;
+      background-color: var(--secondary-color);
+      padding: 1.2rem;
+      border-radius: 1rem;
+      border: 1px dashed var(--primary-color);
+    }
+
+    .otp-box h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+
+    .otp-box input {
+      margin: 0.8rem 0;
+      font-size: 1rem;
+    }
+
+    .status-message {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    .status-message.success {
+      color: var(--success-color);
+    }
+
+    .status-message.error {
+      color: var(--danger-color);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Register as Client</h2>
+  <form id="registerForm">
+    <div class="form-group">
+      <label for="clientNumber">Client Number</label>
+      <input type="text" id="clientNumber" required />
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number (+977)</label>
+      <input type="tel" id="phone" pattern="98[0-9]{8}" placeholder="98XXXXXXXX" required />
+    </div>
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" required />
+    </div>
+    <div class="form-group">
+      <label for="midName">Middle Name</label>
+      <input type="text" id="midName" />
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" required />
+    </div>
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input type="number" id="age" required />
+    </div>
+    <div class="form-group">
+      <label for="sex">Sex</label>
+      <select id="sex" required>
+        <option value="">Select...</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" required />
+    </div>
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" required />
+      <div id="passwordError" class="error"></div>
+    </div>
+    <button type="submit" class="btn">Submit</button>
+    <button type="submit" class="btn"><a href="userlogin.html">Back to Login</a></button>
+  </form>
+
+  <!-- OTP Section -->
+  <div class="otp-box" id="otpSection">
+    <h3>Enter OTP</h3>
+    <p>OTP sent to +977<span id="otpPhoneDisplay"></span></p>
+    <input type="text" id="otpInput" placeholder="Enter OTP here" />
+    <button class="btn" onclick="verifyOTP()">Confirm OTP</button>
+    <div id="otpStatus" class="status-message"></div>
+  </div>
+</div>
+
+<script>
+  let generatedOTP = "";
+  const form = document.getElementById("registerForm");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const phone = document.getElementById("phone").value;
+
+    if (password !== confirmPassword) {
+      document.getElementById("passwordError").textContent = "Passwords do not match!";
+      return;
+    } else {
+      document.getElementById("passwordError").textContent = "";
+    }
+
+    // Generate OTP
+    generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log("Generated OTP:", generatedOTP);
+
+    // Show OTP input box
+    document.getElementById("otpPhoneDisplay").textContent = phone;
+    document.getElementById("otpSection").style.display = "block";
+    alert(`Simulated OTP sent to +977${phone}: ${generatedOTP}`);
+  });
+
+  function verifyOTP() {
+    const enteredOTP = document.getElementById("otpInput").value;
+    const status = document.getElementById("otpStatus");
+
+    if (enteredOTP === generatedOTP) {
+      status.textContent = "✅ OTP Verified. Client registered successfully!";
+      status.className = "status-message success";
+    } else {
+      status.textContent = "❌ Incorrect OTP. Please try again.";
+      status.className = "status-message error";
+    }
+  }
+</script>
+
+</body>
+</html>
