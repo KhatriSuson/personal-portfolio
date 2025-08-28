@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS Learning Documentation — Template</title>
+  <meta name="description" content="A well-structured, fill-in-ready template for CSS learning documentation with sections, code blocks, and examples." />
+  <style>
+    :root {
+      --bg: #0b0c0f;
+      --panel: #11131a;
+      --panel-2: #0f1117;
+      --text: #e6e9ef;
+      --muted: #b6bdcc;
+      --accent: #7c5cff;
+      --accent-2: #4cc9f0;
+      --border: #1c2030;
+      --code-bg: #0f1320;
+      --green: #45c08a;
+      --red: #ff6b6b;
+      --yellow: #ffd166;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 10% -10%, rgba(124,92,255,.15), transparent 40%),
+                  radial-gradient(1200px 800px at 110% 10%, rgba(76,201,240,.1), transparent 40%),
+                  var(--bg);
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        "sidebar header"
+        "sidebar main";
+    }
+
+    /* Header */
+    header {
+      grid-area: header;
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(1.1) blur(6px);
+      background: linear-gradient(180deg, rgba(11,12,15,.9), rgba(11,12,15,.6));
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex; gap: 12px; align-items: center; justify-content: space-between;
+    }
+    .brand { display:flex; gap:10px; align-items:center; font-weight:700; letter-spacing:.3px; }
+    .logo { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(145deg, var(--accent), var(--accent-2)); box-shadow: 0 8px 24px rgba(124,92,255,.25); }
+    .controls { display:flex; gap:10px; align-items:center; }
+    .search {
+      display:flex; align-items:center; gap:8px; width: min(520px, 42vw);
+      background: var(--panel); border:1px solid var(--border); border-radius: 12px; padding: 8px 10px;
+    }
+    .search input {
+      width:100%; background: transparent; border:0; outline: none; color: var(--text);
+    }
+    .btn {
+      background: var(--panel); border:1px solid var(--border); color: var(--text);
+      padding: 8px 12px; border-radius: 12px; cursor:pointer; transition: .2s ease; font-weight:600;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(124,92,255,.15); border-color: #2a2f42; }
+
+    /* Sidebar / TOC */
+    aside { grid-area: sidebar; position: sticky; top: 0; height: 100vh; overflow: auto; border-right:1px solid var(--border); background: var(--panel-2); }
+    .toc { padding: 20px 16px 100px; }
+    .toc h2 { margin: 8px 8px 12px; font-size: 14px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .12em; }
+    .toc a { display:block; color: var(--text); text-decoration:none; padding: 8px 10px; border-radius: 10px; margin: 1px 6px; border:1px solid transparent; }
+    .toc a:hover { background: #121522; border-color: var(--border); }
+    .toc .sub { margin-left: 14px; }
+
+    /* Main */
+    main { grid-area: main; padding: 28px 6vw 80px; }
+    section.doc {
+      background: rgba(16,19,28,.65);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 22px 6px;
+      margin: 0 0 18px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.2);
+    }
+    section.doc h2 { margin: 0 0 10px; font-size: 24px; }
+    section.doc h3 { margin-top: 18px; font-size: 18px; }
+    .muted { color: var(--muted); }
+
+    details.block { border:1px dashed var(--border); border-radius: 14px; padding: 12px 14px; margin: 12px 0; background: #0e1220; }
+    details.block summary { cursor: pointer; font-weight: 700; }
+
+    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    pre { background: var(--code-bg); border:1px solid var(--border); border-radius: 12px; padding: 14px; overflow:auto; position: relative; }
+    code { color: #e6e9ef; }
+
+    .copy-btn { position:absolute; top: 8px; right: 8px; font-size:12px; padding: 6px 8px; border-radius: 8px; background:#12172a; border:1px solid var(--border); color: var(--muted); cursor:pointer; }
+    .tag { display:inline-block; font-size: 12px; padding:4px 8px; border-radius: 999px; border:1px solid var(--border); background:#0d1222; color: var(--muted); margin-right:8px; }
+
+    .callout { border-left: 3px solid var(--accent); padding: 10px 12px; border-radius: 8px; background: #101425; }
+
+    /* Small screens */
+    @media (max-width: 980px) {
+      body { grid-template-columns: 1fr; grid-template-areas: "header" "main"; }
+      aside { display:none; }
+      .search { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <nav class="toc" id="toc">
+      <h2>Contents</h2>
+      <a href="#intro">1. Introduction</a>
+      <a href="#types">2. Types of CSS</a>
+        <a class="sub" href="#inline-css">• Inline CSS</a>
+        <a class="sub" href="#internal-css">• Internal CSS</a>
+        <a class="sub" href="#external-css">• External CSS</a>
+      <a href="#selectors">3. CSS Selectors</a>
+        <a class="sub" href="#basic-selectors">• Basic</a>
+        <a class="sub" href="#combinators">• Combinators</a>
+        <a class="sub" href="#pseudo-classes">• Pseudo-classes</a>
+        <a class="sub" href="#pseudo-elements">• Pseudo-elements</a>
+        <a class="sub" href="#attribute-selectors">• Attribute selectors</a>
+      <a href="#properties">4. CSS Properties</a>
+        <a class="sub" href="#css-font">• CSS Font</a>
+        <a class="sub" href="#css-color-bg">• CSS Color & Background</a>
+        <a class="sub" href="#css-borders">• CSS Borders</a>
+        <a class="sub" href="#css-margin-padding">• CSS Margin & Padding</a>
+        <a class="sub" href="#css-text">• CSS Text</a>
+        <a class="sub" href="#css-size">• CSS Height/Width</a>
+        <a class="sub" href="#css-position-float">• CSS Position & Float</a>
+        <a class="sub" href="#css-overflow">• CSS Overflow</a>
+        <a class="sub" href="#css-box-model">• CSS Box Model</a>
+        <a class="sub" href="#css-navbar">• CSS Navigation Bar</a>
+      <a href="#advanced">5. CSS Advanced Properties</a>
+        <a class="sub" href="#rounded-corners">• Rounded Corners</a>
+        <a class="sub" href="#border-images">• Border Images</a>
+        <a class="sub" href="#text-effects">• Text Effects</a>
+        <a class="sub" href="#gradients">• Gradients</a>
+        <a class="sub" href="#shadows">• Shadows</a>
+      <a href="#units">6. CSS Measurement Units</a>
+      <a href="#layout">7. CSS Website Layout</a>
+        <a class="sub" href="#flexbox">• Flexbox</a>
+        <a class="sub" href="#grid">• Grid</a>
+        <a class="sub" href="#responsive">• Responsive Design</a>
+        <a class="sub" href="#media-queries">• Media Queries</a>
+    </nav>
+  </aside>
+
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <div>CSS Learning Documentation</div>
+        <div class="muted" style="font-size:12px">A fill-in-ready, structured template</div>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="search">
+        🔎
+        <input id="search" type="search" placeholder="Filter sections… (e.g. selectors, flexbox, color)" />
+      </div>
+      <button class="btn" id="expandAll">Expand All</button>
+      <button class="btn" id="collapseAll">Collapse All</button>
+    </div>
+  </header>
+
+  <main id="content">
+    <!-- 1. Introduction -->
+    <section id="intro" class="doc" data-keywords="introduction overview purpose what is css why css">
+      <h2>1. Introduction</h2>
+      <p><span class="tag">Overview</span> <span class="tag">Purpose</span></p>
+      <div class="callout muted">[Add a brief overview of CSS, what it does, how it works with HTML, and typical use cases.]</div>
+      <details class="block">
+        <summary>Example: Attach CSS to HTML</summary>
+        <pre><button class="copy-btn" data-copy>Copy</button><code>&lt;!-- External stylesheet --&gt;
+&lt;link rel="stylesheet" href="styles.css"&gt;
+
+&lt;!-- Internal stylesheet --&gt;
+&lt;style&gt;
+  body { font-family: system-ui; }
+&lt;/style&gt;
+
+&lt;!-- Inline style --&gt;
+&lt;p style="color: crimson"&gt;Hello CSS&lt;/p&gt;</code></pre>
+      </details>
+    </section>
+
+    <!-- 2. Types of CSS -->
+    <section id="types" class="doc" data-keywords="types inline internal external">
+      <h2>2. Types of CSS</h2>
+
+      <h3 id="inline-css">2.1 Inline CSS</h3>
+      <p class="muted">[Explain when to use inline CSS, pros/cons, specificity impact.]</p>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>&lt;p style="color: red; font-weight: 700;"&gt;Inline CSS example&lt;/p&gt;</code></pre>
+
+      <h3 id="internal-css">2.2 Internal CSS</h3>
+      <p class="muted">[Explain the &lt;style&gt; tag in the &lt;head&gt;, scope to a single page.]</p>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>&lt;style&gt;
+  p { color: steelblue; }
+&lt;/style&gt;</code></pre>
+
+      <h3 id="external-css">2.3 External CSS</h3>
+      <p class="muted">[Explain linking external .css files, caching benefits, scalability.]</p>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>&lt;link rel="stylesheet" href="styles.css"&gt;</code></pre>
+    </section>
+
+    <!-- 3. CSS Selectors -->
+    <section id="selectors" class="doc" data-keywords="selectors basic combinators pseudo classes elements attribute">
+      <h2>3. CSS Selectors</h2>
+
+      <h3 id="basic-selectors">3.1 Basic Selectors</h3>
+      <ul>
+        <li>Element selector</li>
+        <li>Class selector</li>
+        <li>ID selector</li>
+      </ul>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>p { color: #ddd; }
+.note { font-size: 1rem; }
+#hero { background: #222; }</code></pre>
+
+      <h3 id="combinators">3.2 Combinators</h3>
+      <p class="muted">[Descendant, child (&gt;), adjacent sibling (+), general sibling (~)]</p>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>article p { color: #9ad; }
+nav &gt; a { text-decoration: none; }
+h2 + p { margin-top: 0; }
+label ~ small { color: #888; }</code></pre>
+
+      <h3 id="pseudo-classes">3.3 Pseudo-classes</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>a:hover { color: salmon; }
+input:focus { outline: 2px solid var(--accent); }</code></pre>
+
+      <h3 id="pseudo-elements">3.4 Pseudo-elements</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>p::first-line { font-weight: 700; }
+button::after { content: " →"; }</code></pre>
+
+      <h3 id="attribute-selectors">3.5 Attribute Selectors</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>input[type="text"] { border: 1px solid #334; }
+img[alt~="logo"] { filter: drop-shadow(0 2px 6px #0007); }</code></pre>
+    </section>
+
+    <!-- 4. CSS Properties -->
+    <section id="properties" class="doc" data-keywords="properties font color background border margin padding text height width position float overflow box model navbar navigation bar">
+      <h2>4. CSS Properties</h2>
+
+      <h3 id="css-font">4.1 CSS Font</h3>
+      <p class="muted">[Explain font-family, font-size, font-weight, line-height, @font-face.]</p>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>p { font-family: Arial, sans-serif; font-size: 1rem; line-height: 1.6; }</code></pre>
+
+      <h3 id="css-color-bg">4.2 CSS Color and Background</h3>
+      <p class="muted">[Explain color formats (hex, rgb, hsl), background-color/image/repeat/size/position.]</p>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>body { color: #eaeef5; background: linear-gradient(90deg, #0f2027, #203a43, #2c5364); }</code></pre>
+
+      <h3 id="css-borders">4.3 CSS Borders</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>div.card { border: 2px solid #223; border-radius: 12px; }</code></pre>
+
+      <h3 id="css-margin-padding">4.4 CSS Margin and Padding</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>.box { margin: 1rem 2rem; padding: 12px 16px; }</code></pre>
+
+      <h3 id="css-text">4.5 CSS Text</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>p { text-align: center; letter-spacing: .02em; text-transform: uppercase; }</code></pre>
+
+      <h3 id="css-size">4.6 CSS Height/Width</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>.panel { width: 320px; max-width: 100%; height: 200px; }</code></pre>
+
+      <h3 id="css-position-float">4.7 CSS Position and Float</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>.sticky { position: sticky; top: 0; }
+img.figure { float: right; margin: 0 0 1rem 1rem; }</code></pre>
+
+      <h3 id="css-overflow">4.8 CSS Overflow</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>.scroll { width: 240px; height: 120px; overflow: auto; }</code></pre>
+
+      <h3 id="css-box-model">4.9 CSS Box Model</h3>
+      <p class="muted">[Insert a diagram of content → padding → border → margin.]</p>
+      <details class="block">
+        <summary>Box Model Example</summary>
+        <pre><button class="copy-btn" data-copy>Copy</button><code>.box-model {
+  margin: 20px;   /* outside */
+  border: 4px solid #334; /* border */
+  padding: 12px;  /* inside border */
+  background: #12192e;    /* content area */
+}</code></pre>
+      </details>
+
+      <h3 id="css-navbar">4.10 CSS Navigation Bar</h3>
+      <details class="block">
+        <summary>Simple Horizontal Nav</summary>
+        <pre><button class="copy-btn" data-copy>Copy</button><code>nav ul { list-style: none; display: flex; gap: 16px; padding: 0; }
+nav a { color: #cfd6e6; text-decoration: none; padding: 8px 10px; border-radius: 8px; }
+nav a:hover { background: #141a2b; }</code></pre>
+      </details>
+    </section>
+
+    <!-- 5. Advanced -->
+    <section id="advanced" class="doc" data-keywords="advanced rounded corners border images text effects gradients shadows">
+      <h2>5. CSS Advanced Properties</h2>
+
+      <h3 id="rounded-corners">5.1 CSS Rounded Corners</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>.chip { border-radius: 999px; }</code></pre>
+
+      <h3 id="border-images">5.2 CSS Border Images</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>.fancy { border: 16px solid transparent; border-image: url(border.png) 30 round; }</code></pre>
+
+      <h3 id="text-effects">5.3 CSS Text Effects</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>h1.title { text-shadow: 2px 2px 10px #0008; filter: drop-shadow(0 6px 18px #0007); }</code></pre>
+
+      <h3 id="gradients">5.4 CSS Gradients</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>.gradient { background: linear-gradient(120deg, #7c5cff, #4cc9f0); }</code></pre>
+
+      <h3 id="shadows">5.5 CSS Shadows</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>.card { box-shadow: 0 10px 30px rgba(0,0,0,.25); }</code></pre>
+    </section>
+
+    <!-- 6. Units -->
+    <section id="units" class="doc" data-keywords="units measurement px em rem % vh vw pt cm in absolute relative">
+      <h2>6. CSS Measurement Units</h2>
+      <h3>6.1 Absolute Units</h3>
+      <ul>
+        <li>px, pt, pc, in, cm, mm</li>
+      </ul>
+      <h3>6.2 Relative Units</h3>
+      <ul>
+        <li>%, em, rem, vw, vh, vmin, vmax, ch, ex</li>
+      </ul>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>p { font-size: 1.125rem; margin: 5%; max-width: 65ch; }</code></pre>
+    </section>
+
+    <!-- 7. Layout -->
+    <section id="layout" class="doc" data-keywords="layout website flexbox grid responsive design media queries">
+      <h2>7. CSS Website Layout</h2>
+
+      <h3 id="flexbox">7.1 Flexbox</h3>
+      <details class="block">
+        <summary>Common Flex Patterns</summary>
+        <pre><button class="copy-btn" data-copy>Copy</button><code>.row { display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+.center { display: flex; align-items: center; justify-content: center; }</code></pre>
+      </details>
+
+      <h3 id="grid">7.2 Grid</h3>
+      <details class="block">
+        <summary>Two-column Grid</summary>
+        <pre><button class="copy-btn" data-copy>Copy</button><code>.grid { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; }</code></pre>
+      </details>
+
+      <h3 id="responsive">7.3 Responsive Design</h3>
+      <p class="muted">[Describe fluid layouts, mobile-first strategy, responsive images.]</p>
+
+      <h3 id="media-queries">7.4 Media Queries</h3>
+      <pre><button class="copy-btn" data-copy>Copy</button><code>@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+}</code></pre>
+    </section>
+
+    <section class="doc" id="notes" data-keywords="notes checklist todo">
+      <h2>Notes / To‑Do</h2>
+      <ul>
+        <li>[Add learning goals for each section]</li>
+        <li>[Insert diagrams (box model, flex axes, grid areas)]</li>
+        <li>[Provide links to MDN/Specs for deeper reading]</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    // Copy buttons for all code blocks
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const code = btn.parentElement.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          const txt = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => (btn.textContent = txt), 1200);
+        });
+      });
+    });
+
+    // Expand / Collapse all details
+    const expandAll = document.getElementById('expandAll');
+    const collapseAll = document.getElementById('collapseAll');
+    const allDetails = () => Array.from(document.querySelectorAll('details.block'));
+    expandAll.addEventListener('click', () => allDetails().forEach(d => (d.open = true)));
+    collapseAll.addEventListener('click', () => allDetails().forEach(d => (d.open = false)));
+
+    // Filter sections by search
+    const search = document.getElementById('search');
+    const sections = Array.from(document.querySelectorAll('section.doc'));
+    function filterDocs(q) {
+      const term = q.trim().toLowerCase();
+      sections.forEach(sec => {
+        if (!term) { sec.style.display = ''; return; }
+        const text = (sec.innerText + ' ' + sec.id + ' ' + (sec.dataset.keywords || ''))
+          .toLowerCase();
+        sec.style.display = text.includes(term) ? '' : 'none';
+      });
+    }
+    search.addEventListener('input', e => filterDocs(e.target.value));
+
+    // Keep TOC link active on scroll
+    const tocLinks = Array.from(document.querySelectorAll('.toc a[href^="#"]'));
+    const headings = sections.map(sec => ({ id: sec.id, el: sec }));
+    const obs = new IntersectionObserver(entries => {
+      const visible = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      const id = visible.target.id;
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: [0, .2, .4, .6, .8, 1] });
+    headings.forEach(h => obs.observe(h.el));
+  </script>
+</body>
+</html>
